@@ -38,10 +38,15 @@
     ]
   },
   "dependencies": {
+    "@apollo/client": "^4.1.4",
     "@apollo/server": "^5.4.0",
     "@auth/prisma-adapter": "^2.11.0",
     "@conform-to/react": "^1.13.1",
     "@conform-to/zod": "^1.13.1",
+    "@graphql-codegen/cli": "^6.1.1",
+    "@graphql-codegen/typescript": "^5.0.7",
+    "@graphql-codegen/typescript-operations": "^5.0.7",
+    "@graphql-codegen/typescript-react-apollo": "^4.4.0",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.16.3",
     "@prisma/extension-accelerate": "^2.0.2",
