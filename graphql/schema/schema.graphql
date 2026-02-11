@@ -6,3 +6,7 @@ type Tag {
 type Query {
   allOwnedTags(userId:ID!):[Tag!]! #配列の強制, 空配列許容
 }
+
+query AllOwnedTags($userId: ID!) {
+  allOwnedTags(userId: $userId) { id name }
+}
