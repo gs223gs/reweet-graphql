@@ -3,6 +3,7 @@ import Link from "next/link";
 import { ApolloTest } from "./ApolloTest";
 
 import { getTagsWithRanking } from "@/app/(private)/dashboard/tags/_server/server";
+import { getUser } from "@/auth";
 import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { TagsHeader } from "@/components/tag/display/tags-header";
 import { TagsList } from "@/components/tag/display/tags-list";
@@ -19,7 +20,8 @@ import { routes } from "@/util/routes";
 
 export default async function TagsPage() {
   const tags = await getTagsWithRanking();
-
+  const user = await getUser();
+  if (!user) return false;
   if (!tags.ok) {
     const errorMessage = tags.error?.message?.join(" / ");
 
@@ -69,7 +71,7 @@ export default async function TagsPage() {
         <div className="space-y-4">
           <TagsOverviewCard topTag={topTag} />
         </div>
-        <ApolloTest />
+        <ApolloTest userId={user.id} />
         <TagsList tags={tagList} />
       </section>
     </div>
