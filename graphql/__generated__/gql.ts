@@ -2,6 +2,13 @@
 import * as types from "./graphql";
 import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 
+// ------------------------------------------------------------------
+// セクション1: 実際に使うもの
+// 使い方:
+// const doc = graphql(`query AllOwnedTags($userId: ID!) { allOwnedTags(userId: $userId) { id name } }`);
+// const { data } = useQuery(doc, { variables: { userId: "1" } });
+// ------------------------------------------------------------------
+
 /**
  * Map of all GraphQL operations in the project.
  *
@@ -46,5 +53,16 @@ export function graphql(source: string) {
   return (documents as any)[source] ?? {};
 }
 
+// ------------------------------------------------------------------
+// セクション2: 見ておいた方がいいもの
+// 使い方:
+// DocumentType<typeof doc> の形で、doc から data 型を取り出せる。
+// ------------------------------------------------------------------
 export type DocumentType<TDocumentNode extends DocumentNode<any, any>> =
   TDocumentNode extends DocumentNode<infer TType, any> ? TType : never;
+
+// ------------------------------------------------------------------
+// セクション3: 通常は使わないもの
+// 使い方:
+// documents マップや string overload の詳細は通常意識しなくてよい。
+// ------------------------------------------------------------------

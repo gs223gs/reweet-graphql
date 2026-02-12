@@ -28,6 +28,7 @@ export default [
       "stories/**",
       ".storybook/**",
       "components/ui/**",
+      "graphql/__generated__/**",
     ],
   },
   {

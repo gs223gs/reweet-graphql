@@ -5,9 +5,15 @@ const config: CodegenConfig = {
   documents: ["./graphql/schema/*.{gql,graphql}"],
   ignoreNoDocuments: true,
   generates: {
-    "graphql/__generated__/": {
+    // client preset（フロント用）
+    "./graphql/__generated__/": {
       preset: "client",
       plugins: [],
+    },
+
+    // resolver型（サーバー用）
+    "./graphql/__generated__/resolvers-types.ts": {
+      plugins: ["typescript", "typescript-resolvers"],
     },
   },
 };

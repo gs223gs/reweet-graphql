@@ -1,5 +1,12 @@
 /* eslint-disable */
 import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
+
+// ------------------------------------------------------------------
+// セクション1: 実際に使うもの
+// 使い方:
+// import { AllOwnedTagsDocument } from "@/graphql/__generated__/graphql";
+// const { data } = useQuery(AllOwnedTagsDocument, { variables: { userId: "1" } });
+// ------------------------------------------------------------------
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = T | null | undefined;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -53,6 +60,10 @@ export type AllOwnedTagsQuery = {
   allOwnedTags: Array<{ __typename?: "Tag"; id: string; name: string }>;
 };
 
+// 実際に最もよく使うのは Document と Variables / Query の3点。
+// - AllOwnedTagsDocument: useQuery に渡す
+// - AllOwnedTagsQueryVariables: variables の形
+// - AllOwnedTagsQuery: data の形
 export const AllOwnedTagsDocument = {
   kind: "Document",
   definitions: [
@@ -102,3 +113,15 @@ export const AllOwnedTagsDocument = {
     },
   ],
 } as unknown as DocumentNode<AllOwnedTagsQuery, AllOwnedTagsQueryVariables>;
+
+// ------------------------------------------------------------------
+// セクション2: 見ておいた方がいいもの
+// 使い方:
+// Scalars / Query / Tag はスキーマ理解や型エラー調査時に参照する。
+// ------------------------------------------------------------------
+
+// ------------------------------------------------------------------
+// セクション3: 通常は使わないもの
+// 使い方:
+// Maybe / Exact などの utility 型は生成内部で使われるため通常は触らない。
+// ------------------------------------------------------------------
