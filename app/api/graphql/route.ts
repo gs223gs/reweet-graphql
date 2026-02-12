@@ -1,24 +1,41 @@
+import { readFileSync } from "fs";
+import path from "node:path";
+
 import { ApolloServer } from "@apollo/server";
 import { NextResponse, type NextRequest } from "next/server";
 
+import type {
+  Resolvers,
+  TagResolvers,
+} from "@/graphql/__generated__/resolvers-types";
+
+import { prisma } from "@/lib/prisma";
 // Apollo Server は Node.js ランタイムで動かす
 export const runtime = "nodejs";
 
 // GraphQL のスキーマ定義:
 // Query 型に、呼び出せるフィールド(関数名のようなもの)を定義する
-const typeDefs = `#graphql
-  type Query {
-    helloworld: String!
-    helloWorld: String!
-  }
-`;
+const typeDefs = readFileSync(
+  path.join(process.cwd(), "graphql/schema/schema.graphql"),
+  "utf8",
+);
+export const tagResolvers: TagResolvers = {
+  id: (parent) => parent.id,
+  name: (parent) => parent.name,
+};
 
-// resolver:
-// 各フィールドが呼ばれた時に、実際に何を返すかを定義する
-const resolvers = {
+export const resolvers: Resolvers = {
   Query: {
-    helloworld: () => "Hello, world!",
-    helloWorld: () => "Hello, world!",
+    allOwnedTags: async (_parent, args, _context) => {
+      const res = await prisma.tag.findMany({
+        where: { userId: args.userId },
+      });
+
+      const ownedTags = res.map((t) => {
+        return { id: t.id, name: t.name };
+      });
+      return ownedTags;
+    },
   },
 };
 
